@@ -1,0 +1,54 @@
+
+  
+version: '3'
+
+services:
+
+  rabbitmq1:
+    image: rabbitmq:management
+    hostname: rabbitmq1
+    container_name: rabbitmq1
+    volumes:
+      - ./rabbitmq-1:/var/lib/rabbitmq
+    ports:
+      - 7672:5672
+      - 17672:15672
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=6677345990234029340234920349
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=Admin&*90
+      - RABBITMQ_DEFAULT_VHOST=rabbitmq1
+
+  rabbitmq2:
+    image: rabbitmq:management
+    links:
+      - rabbitmq1
+    hostname: rabbitmq2
+    container_name: rabbitmq2
+    volumes:
+      - ./rabbitmq-2:/var/lib/rabbitmq
+    ports:
+      - 6672:5672
+      - 16672:15672
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=6677345990234029340234920349
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=Admin&*90
+      - RABBITMQ_DEFAULT_VHOST=rabbitmq1
+
+  rabbitmq3:
+    image: rabbitmq:management
+    links:
+      - rabbitmq1
+    hostname: rabbitmq3
+    container_name: rabbitmq3
+    volumes:
+      - ./rabbitmq-3:/var/lib/rabbitmq
+    ports:
+      - 8672:5672
+      - 18672:15672
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=6677345990234029340234920349
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=Admin&*90
+      - RABBITMQ_DEFAULT_VHOST=rabbitmq1
